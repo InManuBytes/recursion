@@ -20,8 +20,9 @@ var stringifyJSON = function(obj) {
     }
   } else if (typeof obj === 'string'){
     return "\""+obj+"\"";
-  } else if (Array.isArray(obj) === true){
-    return "[]";
+  } else if (Array.isArray(obj)){
+      return "[" + _.reduce(obj,function(memo,value){
+          return memo.concat(stringifyJSON(value)); 
+      },[]).join(",") + "]";
   }
 };
-
