@@ -7,7 +7,6 @@
 // but you don't so you're going to write it from scratch:
 
 var stringifyJSON = function(obj) {
-  let stringVersion = "";
   if (typeof obj === 'number'){
     return String(obj);
   } else if (obj === null){
@@ -24,5 +23,9 @@ var stringifyJSON = function(obj) {
       return "[" + _.reduce(obj,function(memo,value){
           return memo.concat(stringifyJSON(value)); 
       },[]).join(",") + "]";
-  }
+  } else if (_.isObject(obj)){
+      return '{' + _.reduce(obj, function(memo,value,key){
+        return (value instanceof Function || value === undefined) ? [] : memo.concat(stringifyJSON(key)+':'+stringifyJSON(value));
+      },[]).join(',')+'}'
+  } 
 };
